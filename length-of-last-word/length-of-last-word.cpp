@@ -1,16 +1,11 @@
 class Solution {
 public:
-    int lengthOfLastWord(string str) {
-    stringstream s(str); // Used for breaking words
-	string word; // to store individual words
-
-	int count = 0;
-	while (s >> word){
-      cout<<word<<'\n';
-      count++;
-    }
-		
-	return word.size();
-        
+    int lengthOfLastWord(string s) {
+        int ans = 0;
+        for(int i=s.size()-1;i>=0;--i){
+            if(s[i] == ' ' && ans > 0) return ans;
+            if(s[i] != ' ') ans++;
+        }
+        return ans;
     }
 };

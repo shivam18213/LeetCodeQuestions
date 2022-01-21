@@ -22,6 +22,6 @@ public:
             n=sum;
             s.insert(sum);
         }
-        return n==1;
+        return true;
     }
 };

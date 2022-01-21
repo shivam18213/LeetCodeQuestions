@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int sum_digits(int n){
+    int nextno(int n){
         int sum1= 0;
         int d=0;
         while(n > 0){
@@ -11,16 +11,14 @@ public:
         return sum1;
     }
     bool isHappy(int n) {
-        int sum=0;
-        set<int> s;
-        s.insert(n);
-        while(n != 1){
-            sum = sum_digits(n);
-            if(s.find(sum) != s.end()){
+        int s= n;
+        int f= nextno(n);
+        while(s !=1){
+            if(f == s){
                 return false;
             }
-            n=sum;
-            s.insert(sum);
+            f=nextno(nextno(f));
+            s=nextno(s);
         }
         return true;
     }

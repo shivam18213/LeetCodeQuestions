@@ -10,36 +10,32 @@
  */
 class Solution {
 public:
-    vector<int> rotateArray(vector<int> v, int k){
-        while( k > v.size()){
-            k = k % v.size();
-        }
-        vector<int> a(v.size());
-        for(int i=0; i < v.size(); i++){
-            a[(i+k)%v.size()] = v[i];
-        }
-        return a;
-    }
     ListNode* rotateRight(ListNode* head, int k) {
-        // store the elements of ll in vector
-        if(head == nullptr || head->next == nullptr){
+       if(head == nullptr || head->next == nullptr)
             return head;
-        }
-        vector<int> v;
         ListNode* p = head;
-        while(p != nullptr){
-            v.push_back(p->val);
+        int length =0;
+        // length
+        while(p->next != nullptr){
+            length++;
             p = p->next;
         }
-        vector<int> a = rotateArray(v, k);
-        ListNode* dummy = new ListNode();
-        head = dummy;
-        for(int i = 0; i < a.size(); i++){
-            ListNode* node = new ListNode(a[i],nullptr);
-            head->next = node;
-            head = head->next;
+        length++;
+        while( k > length){
+            k = k % length;
         }
-        return dummy->next;
-        
+        if(head == nullptr || head->next == nullptr || k % length == 0){
+            return head;
+        }
+        // make last point to first(circular linked list)
+        p->next = head;
+        p=head;
+        for(int i= 0; i < length-k-1; i++){
+            p=p->next;
+        }
+        ListNode* ret;
+        ret = p->next;;
+        p->next = nullptr;
+        return ret;
     }
 };

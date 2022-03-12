@@ -1,40 +1,35 @@
-/*
-// Definition for a Node.
-class Node {
-public:
-    int val;
-    Node* next;
-    Node* random;
-    
-    Node(int _val) {
-        val = _val;
-        next = NULL;
-        random = NULL;
-    }
-};
-*/
-// using hashmaps
+
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        // 
-        Node* p = head;
-        unordered_map<Node*, Node*> nodes;
-        while(p != nullptr){
-            Node* nNode = new Node(p->val);
-            nodes[p] = nNode;
-            p= p->next;
+        Node* front = head;
+        Node* back = head;
+        // inserting buffer nodes in between
+        while(back != nullptr){
+            Node* n = new Node(back -> val);
+            front= back->next;
+            back->next = n;
+            n->next = front;
+            back = front;
         }
-        // original node and its copies are stored in hashmap
-        p = head;
-        // traversing original linkedList again
-        // and making new linkedlist
-        while(p != nullptr){
-            Node* clonePtr = nodes[p];
-            clonePtr->next = nodes[p->next];
-            clonePtr->random = nodes[p->random];
-            p = p->next;
+        // arangeing random pointers
+        back = head;
+        while(back != nullptr){
+            if(back->random != nullptr)
+                back->next->random = back->random->next;
+            back = back->next->next;
         }
-        return nodes[head];
-    }
+        
+        back = head;
+        Node* dummy = new Node(-1);
+        Node* buffers = dummy;
+        while(back != nullptr){
+            front = back->next->next;
+            buffers->next = back->next;
+            back->next = front;
+            buffers = buffers->next;
+            back = front;
+        }
+        return dummy->next;
+    }       
 };

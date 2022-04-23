@@ -1,21 +1,38 @@
 class MyHashSet {
 public:
-    vector<int> arr;
+    // hashvector
+    vector<list<int>> hashStore;
+    int siz;
     MyHashSet() {
-        int size = 1e6+1;
-        arr.resize(size);
+        siz = 10;
+        hashStore.resize(siz);
+        
     }
     
+    int hashFunc(int key){
+        return key % siz;
+    }
     void add(int key) {
-        arr[key] = 1;
+        if(contains(key)) return;
+        int index = hashFunc(key);
+        hashStore[index].push_back(key);
     }
     
     void remove(int key) {
-        arr[key] = 0;
+        if(!contains(key)) return;
+        int index = hashFunc(key);
+        hashStore[index].erase(search(key));  
     }
     
+    list<int> :: iterator search(int key){
+        int index = hashFunc(key);
+        return find(hashStore[index].begin(), hashStore[index].end(), key);
+        
+    }
     bool contains(int key) {
-        return arr[key];
+        int index = hashFunc(key);
+        if(search(key) == hashStore[index].end()) return false;
+        else return true;
     }
 };
 

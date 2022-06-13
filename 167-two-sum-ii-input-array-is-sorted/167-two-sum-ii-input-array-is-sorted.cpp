@@ -1,24 +1,22 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        int p1 = 0;
-        int p2 = nums.size()-1;
-        vector<int> res;
-        while(p1 < p2){
-            if(nums[p1] + nums[p2] == target){
-                res.push_back(p1+1);
-                res.push_back(p2+1);
-                return res;
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        int s=0;
+        int e=numbers.size()-1;
+        vector<int> v;
+        while(s < e){
+            int sum = numbers[e]+numbers[s];
+            if(sum == target){
+                v.push_back(s+1);
+                v.push_back(e+1);
+                return v;
             }
-            else if(nums[p1] + nums[p2] < target){
-                p1++;
+            else if(sum > target){
+                e--;
             }
-            else{
-                p2--;
-            }
-                
-            
+            else s++;
         }
-        return res;
+        return v;
+        
     }
 };
